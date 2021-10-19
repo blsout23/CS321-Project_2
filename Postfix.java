@@ -4,16 +4,17 @@ import java.util.*;
 
 
 public class Postfix{
-	private String in_file, out_file;
+	private String inFile, outFile;
+	public String postfix;
 
 
 	public Postfix(String[] args){
 		if (args.length == 1) {
-			in_file = args[0];
-			out_file = null;
+			inFile = args[0];
+			outFile = null;
 		} else if (args.length == 2) {
-			in_file = args[0];
-			out_file = args[1];
+			inFile = args[0];
+			outFile = args[1];
 		} else {
 			System.out.println("Usage Error: java Postfix input [output]");
 			return;
@@ -24,23 +25,16 @@ public class Postfix{
 	}
 
 	public void processFile(){
-		try (BufferedReader br = new BufferedReader(new FileReader(this.in_file))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(this.inFile))) {
 		    String line, ans, fullAnswer;
 		    fullAnswer = new String("");
 		    while ((line = br.readLine()) != null) {
 		    	ans = this.convert(line);
-		    	if (this.out_file == null){
-		    		System.out.println(ans);
-				} else {
-					fullAnswer += ans + "\n";
-				}
+				fullAnswer += ans + "\n";
 		    }
-    		if (this.out_file != null){
-				// File myObj = new File(out_file);
-				// myObj.close()
-
+    		if (this.outFile != null){
 				try {
-					FileWriter myWriter = new FileWriter(out_file);
+					FileWriter myWriter = new FileWriter(outFile);
 					myWriter.write(fullAnswer);
 					myWriter.close();
 				}
@@ -48,6 +42,9 @@ public class Postfix{
 					System.out.println("Unable to open output file");
 				}
 				
+			} else {
+				System.out.println(fullAnswer);
+				this.postfix = fullAnswer;
 			}
 		} catch (IOException e){
 			System.out.println("Unable to open input file");
@@ -58,8 +55,8 @@ public class Postfix{
 	public String convert(String line){
 		Stack<String> stack = new Stack<String>();
 		String right, left, oper;
-		String[] split_line = line.split(" ");
-		for (String token : split_line){
+		String[] splitLine = line.split(" ");
+		for (String token : splitLine){
 			if (token.equals(")")){
 				right = stack.pop();
 				oper = stack.pop();
