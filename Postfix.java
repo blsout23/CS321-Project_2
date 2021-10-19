@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Postfix{
 	private String inFile, outFile;
-	public String postfix;
+	public String postfix, infix;
 
 
 	public Postfix(String[] args){
@@ -26,25 +26,29 @@ public class Postfix{
 
 	public void processFile(){
 		try (BufferedReader br = new BufferedReader(new FileReader(this.inFile))) {
-		    String line, ans, fullAnswer;
+		    String line, ans, fullAnswer, fullInfix;
+		    fullInfix = new String("");
 		    fullAnswer = new String("");
 		    while ((line = br.readLine()) != null) {
 		    	ans = this.convert(line);
 				fullAnswer += ans + "\n";
+				fullInfix += line + "\n";
 		    }
+		    this.infix = fullInfix;
+		    this.postfix = fullAnswer;
     		if (this.outFile != null){
-				try {
-					FileWriter myWriter = new FileWriter(outFile);
-					myWriter.write(fullAnswer);
-					myWriter.close();
-				}
-				catch (IOException e) {
-					System.out.println("Unable to open output file");
-				}
-				
+    			if (this.outFile != "throwaway") { 
+					try {
+						FileWriter myWriter = new FileWriter(outFile);
+						myWriter.write(fullAnswer);
+						myWriter.close();
+					}
+					catch (IOException e) {
+						System.out.println("Unable to open output file");
+					}
+    			}
 			} else {
 				System.out.println(fullAnswer);
-				this.postfix = fullAnswer;
 			}
 		} catch (IOException e){
 			System.out.println("Unable to open input file");
