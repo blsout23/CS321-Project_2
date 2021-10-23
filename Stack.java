@@ -1,34 +1,42 @@
-//Ben Southwick
-//Dhruv Joshi
-//CS321 Project 2
+/*Ben Southwick and Dhruv Joshi
+CS321 Project 2
+Stack Implementation*/
 
 import java.util.*;
+
+
 
 public class Stack<E> {
 	
 	private LinkedList<E> ll;
 	
+	//init
 	public Stack() {
 		this.ll = new LinkedList<E>();
 	}
 	
-	public E /*value*/ pop() {
+	//remove top of stack and return value
+	public E pop() {
 		return this.ll.removeLast();
 	}
 	
+	//add item to top of stack
 	public void push(E obj) {
 		this.ll.addLast(obj);
 	}
 	
+	//clear all items from stakc
 	public void clear() {
 		this.ll.clear();
 	}
 	
+	//convert the stack to an array
 	public Object[] toArray() {
 		return this.ll.toArray();
 	}
 		
 	
+	//   TEST METHODS
 	public static void test_push() {
 		Stack<Integer> stackInt = new Stack<Integer>();
 		stackInt.push(1);
@@ -130,6 +138,7 @@ public class Stack<E> {
 		assert stackStr.toArray().equals(new String[] {"a", "b", "c"});
 	}
 	
+	//run test methods
 	public static void main( String[] argv ) {
 		test_push();
 		test_pop();
